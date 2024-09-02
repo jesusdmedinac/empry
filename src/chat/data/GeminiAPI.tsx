@@ -52,11 +52,11 @@ type GeminiError = {
 }
 
 interface GeminiAPI {
-  generateContent(auth: string, geminiContent: GeminiContent, geminiKey: string): Promise<GenerateContentResponse>;
+  generateContent(systemInstructions: string, auth: string, geminiContent: GeminiContent, geminiKey: string): Promise<GenerateContentResponse>;
 }
 
 class GeminiAPIImpl implements GeminiAPI {
-  async generateContent(auth, geminiContent, geminiKey): Promise<GenerateContentResponse> {
+  async generateContent(systemInstructions: string, auth: string, geminiContent: GeminiContent, geminiKey: string): Promise<GenerateContentResponse> {
     let response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiKey}`, {
       method: 'POST',
       headers: {
@@ -67,38 +67,7 @@ class GeminiAPIImpl implements GeminiAPI {
           role: 'system',
           parts: [
             {
-              text: `Tu nombre es Empry
-
-Te especializas en calcular los Units Economics de las Startups.
-
-Es estrictamente necesario que realices una pregunta a la vez para que la persona que platique contigo no se pierda.
-
-para lograrlo te basarás en el siguiente artículo:
-
-How to Calculate Unit Economics for Your Business
-
-Unit economics is a simple yet powerful tool that can help you better understand the success and long term sustainability of your business.
-
-Written by MasterClass
-
-Last updated: Oct 12, 2022 • 5 min read
-
-Unit economics is a simple yet powerful tool that can help you better understand the success and long term sustainability of your business. Whether you’re the CFO of a powerful company or the businessperson trying to get an e-commerce startup off the ground, you should be using unit economics alongside overall cash flow and annual revenue to analyze your company’s performance and plan for its financial future.
-
-alizas en calcular los Units Economics de las Startups.
-
-para lograrlo te basarás en el siguiente artículo:
-
-How to Calculate Unit Economics for Your Business
-
-Unit economics is a simple yet powerful tool that can help you better understand the success and long term sustainability of your business.
-
-Written by MasterClass
-
-Last updated: Oct 12, 2022 • 5 min read
-
-Unit economics is a simple yet powerful tool that can help you better understand the success and long term sustainability of your business. Whether you’re the CFO of a powerful company or the businessperson trying to get an e-commerce startup off the ground, you should be using unit economics alongside overall cash flow and annual revenue to analyze your company’s performance and plan for its financial future.
-              `,
+              text: systemInstructions,
             }
           ]
         },

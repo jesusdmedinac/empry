@@ -22,12 +22,12 @@ export default function ChatMessages({ messages }: { messages: Message[] }) {
           return (
             message.role == "user"
             ? <div key={index} className="mb-4 text-right" ref={lastMessageRef}>
-              <div className="bg-paradiso text-white p-3 rounded-lg shadow-md max-w-md ml-auto">
+              <div className="bg-gray-800 text-white p-3 rounded-lg shadow-md max-w-md ml-auto">
                 <Markdown>{markdown}</Markdown>
               </div>
             </div>
             : <div key={index} className="mb-4" ref={lastMessageRef}>
-              <div className="bg-viking text-white p-3 rounded-lg shadow-md max-w-md">
+              <div className="text-slate-100 p-3 rounded-lg shadow-md max-w-md">
                 <Markdown>{markdown}</Markdown>
               </div>
             </div>
