@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from 'react';
-import GeminiAPI from './data/GeminiAPI';
+import { GeminiAPIImpl, type GeminiAPI, type GeminiContent, type GenerateContentResponse } from './data/GeminiAPI';
 import { IoArrowBackOutline } from 'react-icons/io5';
 import ChatMessages from './components/ChatMessages';
 import ChatInput from './components/ChatInput';
@@ -15,7 +15,12 @@ export type Message = {
   content: string
 }
 
-export default function Chat({ geminiKey, systemInstructions } : { geminiKey: string, systemInstructions: string }) {
+
+const geminiAPIImpl = new GeminiAPIImpl();
+
+const generateContent = async (geminiContent: GeminiContent) => geminiAPIImpl.generateContent(geminiContent);
+
+export default function Chat() {
   const [message, setMessage] = useState<string>("");
   const [messages, setMessages] = useState<Message[]>([]);
   //const [user, setUser] = useState<User | null>(null);
@@ -27,13 +32,13 @@ export default function Chat({ geminiKey, systemInstructions } : { geminiKey: st
     });
   }, []);*/
 
-  async function sendMessage() {
-    const generateContentResponse = await GeminiAPI.generateContent(systemInstructions, "", {
+  const sendMessage = async () => {
+    const generateContentResponse = await generateContent({
       contents: messages.map((message) => ({
         role: message.role,
         parts: [ { text: message.content } ]
       }))
-    }, geminiKey);
+    });
     let content;
     if (generateContentResponse.error) {
       content = generateContentResponse.error.message;
@@ -69,7 +74,7 @@ export default function Chat({ geminiKey, systemInstructions } : { geminiKey: st
 
       {
         messages.length === 0 
-        ? <div className='shrink-0 flex flex-row w-full p-4'>
+        ? <div className='shrink-0 flex flex-row w-full p-4 text-white'>
         <button className='w-1/2 border-2 p-2 m-2 rounded-lg text-start' onClick={() => {
           const message = '¿Podrías ayudarme a calcular las Units Económics de mi Startup?';
           if (message.trim() !== '') {

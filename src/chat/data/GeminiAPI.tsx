@@ -1,83 +1,71 @@
-type GeminiContent = {
+export type GeminiContent = {
   system_instruction?: ContentItem;
   contents: ContentItem[];
 }
 
-type ContentItem = {
+export type ContentItem = {
   role: string ,
   parts: ContentPart[];
 }
 
-type ContentPart = {
+export type ContentPart = {
   text: string;
 }
 
-type GenerateContentResponse = {
+export type GenerateContentResponse = {
   candidates: Candidate[];
   usageMetadata: UsageMetadata;
   error: GeminiError;
 };
 
-type Candidate = {
+export type Candidate = {
   content: Content;
   finishReason: string;
   index: number;
   safetyRatings: SafetyRating[];
 }
 
-type Content = {
+export type Content = {
   parts: Part[];
   role: string;
 }
 
-type Part = {
+export type Part = {
   text: string;
 }
 
-type SafetyRating = {    
+export type SafetyRating = {    
   category: string;
   probability: string;
 }
 
-type UsageMetadata = {
+export type UsageMetadata = {
   promptTokenCount: number;
   candidatesTokenCount: number;
   totalTokenCount: number;
 }
 
-type GeminiError = {
+export type GeminiError = {
   code: number;
   message: string;
   status: string;
 }
 
-interface GeminiAPI {
-  generateContent(systemInstructions: string, auth: string, geminiContent: GeminiContent, geminiKey: string): Promise<GenerateContentResponse>;
+export interface GeminiAPI {
+  generateContent(geminiContent: GeminiContent): Promise<GenerateContentResponse>;
 }
 
-class GeminiAPIImpl implements GeminiAPI {
-  async generateContent(systemInstructions: string, auth: string, geminiContent: GeminiContent, geminiKey: string): Promise<GenerateContentResponse> {
-    let response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiKey}`, {
+export class GeminiAPIImpl implements GeminiAPI {
+  async generateContent(geminiContent: GeminiContent): Promise<GenerateContentResponse> {
+    let response = await fetch(`https://empry.jesus-daniel-medina-cruz.workers.dev/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        system_instruction: {
-          role: 'system',
-          parts: [
-            {
-              text: systemInstructions,
-            }
-          ]
-        },
         ...geminiContent,
       }),
     })
     return (await response.json()) as GenerateContentResponse;
   }
 }
-
-const GeminiAPI = new GeminiAPIImpl();
-
-export default GeminiAPI;
