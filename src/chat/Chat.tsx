@@ -101,6 +101,19 @@ export default function Chat() {
         }}>
           ¿Podrías ayudarme a evaluar mis preguntas para ver si pasan "The Mom Test"?
         </button>
+        <button className='w-1/2 border-2 p-2 m-2 rounded-lg text-start' onClick={() => {
+          const message = '¿Podrías ayudarme a entender el tamaño del mercado de mi negocio?';
+          if (message.trim() !== '') {
+            setMessages([...messages, {
+              role: 'user',
+              content: message
+            }]);
+          }
+          setMessage("");
+          setSideEffect(SideEffect.sendMessage)
+        }}>
+          ¿Podrías ayudarme a entender el tamaño del mercado de mi negocio?
+        </button>
       </div>
       : <></>
       }

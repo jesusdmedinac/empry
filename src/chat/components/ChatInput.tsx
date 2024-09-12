@@ -9,7 +9,7 @@ export default function ChatInput({
 }) {
   return (
     <div className="flex">
-      <input className="flex-grow p-2 h-10 rounded-lg border border-gray-300 text-slate-900 focus:ring-2 focus:ring-blue-500" type="text" placeholder="Platica con Empry" value={message} onChange={(e) => onMessageChange(e.target.value)} />
+      <textarea className="flex-grow p-2 h-10 rounded-lg border border-gray-300 text-slate-900 focus:ring-2 focus:ring-blue-500" placeholder="Platica con Empry" value={message} onChange={(e) => onMessageChange(e.target.value)} />
       <button className="h-10 px-6 font-semibold rounded-md text-white" onClick={onSendMessage}>Enviar</button>
     </div>
   );

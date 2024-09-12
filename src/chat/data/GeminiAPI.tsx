@@ -57,7 +57,10 @@ export interface GeminiAPI {
 
 export class GeminiAPIImpl implements GeminiAPI {
   async generateContent(geminiContent: GeminiContent): Promise<GenerateContentResponse> {
-    let response = await fetch(`https://empry.jesus-daniel-medina-cruz.workers.dev/`, {
+    const workerUrl = import.meta.env.DEV 
+    ? 'http://localhost:8787/'
+    : 'https://empry.jesus-daniel-medina-cruz.workers.dev/'
+    let response = await fetch(workerUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
