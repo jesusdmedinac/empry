@@ -58,6 +58,13 @@ export default function Chat() {
     }
   }, [sideEffect]);
 
+  const suggestions = [
+    "¿Podrías ayudarme a calcular las Units Económics de mi Startup?",
+    "¿Podrías ayudarme a evaluar mis preguntas para ver si pasan \"The Mom Test\"?",
+    "¿Podrías ayudarme a entender el tamaño del mercado de mi negocio?",
+    "¿Podrías ayudarme a generar una presentación de pitch deck profesional para mi Startup?",
+  ];
+
   return (
     <div className='h-full flex flex-col'>
       {/* Encabezado */}
@@ -74,46 +81,19 @@ export default function Chat() {
 
       {
         messages.length === 0 
-        ? <div className='shrink-0 flex flex-row w-full p-4 text-white'>
-        <button className='w-1/2 border-2 p-2 m-2 rounded-lg text-start' onClick={() => {
-          const message = '¿Podrías ayudarme a calcular las Units Económics de mi Startup?';
-          if (message.trim() !== '') {
+        ? <div className='shrink-0 w-full p-4 text-white columns-2 text-sm'>
+        {suggestions.map((suggestion) => (
+          <button className='border-2 p-2 m-2 rounded-lg text-start' onClick={() => {
             setMessages([...messages, {
               role: 'user',
-              content: message
+              content: suggestion
             }]);
-          }
-          setMessage("");
-          setSideEffect(SideEffect.sendMessage)
-        }}>
-          ¿Podrías ayudarme a calcular las Units Económics de mi Startup?
-        </button>
-        <button className='w-1/2 border-2 p-2 m-2 rounded-lg text-start' onClick={() => {
-          const message = '¿Podrías ayudarme a evaluar mis preguntas para ver si pasan "The Mom Test"?';
-          if (message.trim() !== '') {
-            setMessages([...messages, {
-              role: 'user',
-              content: message
-            }]);
-          }
-          setMessage("");
-          setSideEffect(SideEffect.sendMessage)
-        }}>
-          ¿Podrías ayudarme a evaluar mis preguntas para ver si pasan "The Mom Test"?
-        </button>
-        <button className='w-1/2 border-2 p-2 m-2 rounded-lg text-start' onClick={() => {
-          const message = '¿Podrías ayudarme a entender el tamaño del mercado de mi negocio?';
-          if (message.trim() !== '') {
-            setMessages([...messages, {
-              role: 'user',
-              content: message
-            }]);
-          }
-          setMessage("");
-          setSideEffect(SideEffect.sendMessage)
-        }}>
-          ¿Podrías ayudarme a entender el tamaño del mercado de mi negocio?
-        </button>
+            setMessage("");
+            setSideEffect(SideEffect.sendMessage)
+          }}>
+            {suggestion}
+          </button>
+        ))}
       </div>
       : <></>
       }
