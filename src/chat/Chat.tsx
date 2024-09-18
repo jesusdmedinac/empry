@@ -75,8 +75,10 @@ export default function Chat() {
         <h1 className="text-2xl font-bold px-4">
           Empry 0.0.2
         </h1>
-        <span className='grow'></span>
+
         <span className='bg-gradient-to-br from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% rounded-full text-white py-2 px-2'>Experimental</span>
+        <span className='grow'></span>
+        <a href="https://tally.so/r/wkWgxM"><span className='bg-gradient-to-br from-[#00ffff] from-10% to-[#ff00ff] to-90% rounded-full text-white py-2 px-2'>Descubre Empry Pro</span></a>
       </header>
 
       {
